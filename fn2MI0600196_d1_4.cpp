@@ -13,12 +13,47 @@
 
 #include <iostream>
 
+//used binary search to find floor of the square root in O(log n) time
+//this is used to optimize the isPrime func
+int getSquareRoot(int num) {
+	if (num == 0 || num == 1) {
+		return num;
+	}
+
+	int left = 1;
+	int right = num / 2;
+	int ans = 0;
+
+	while (left <= right) {
+		int mid = (left + right) / 2;
+
+		int square = mid * mid;
+
+		if (square == num) {
+			return mid;
+		}
+
+		if (square > num) {
+			right = mid - 1;
+		}
+		else {
+			left = mid + 1;
+			ans = mid;
+		}
+	}
+	return ans;
+}
+
 bool isPrime(int num) {
-	if (num == 1) {
+	if (num == 2) {
+		return true;
+	}
+
+	if (num == 1 || num % 2 == 0) {
 		return false;
 	}
 
-	for (int i = 2; i < num; ++i) {
+	for (int i = 3; i < getSquareRoot(num) + 1; i += 2) {
 		if (num % i == 0) {
 			return false;
 		}
@@ -28,8 +63,6 @@ bool isPrime(int num) {
 }
 
 bool numsAreUnique(int num) {
-	const int divisor = 10;
-
 	int multipleOfTen = 1000000;
 
 	while (num / multipleOfTen == 0) {
@@ -47,7 +80,6 @@ bool numsAreUnique(int num) {
 			}
 		}
 	}
-
 	return true;
 }
 
@@ -61,7 +93,6 @@ int main() {
 		return 1;
 	}
 
-	
 	int i = 0;
 
 	while (true) {
@@ -69,7 +100,7 @@ int main() {
 			std::cout << num - i;
 			return 0;
 		}
-		else if (isPrime(num + i) && numsAreUnique(num + i)) {
+		if (isPrime(num + i) && numsAreUnique(num + i)) {
 			std::cout << num + i;
 			return 0;
 		}
