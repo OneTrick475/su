@@ -53,7 +53,7 @@ bool isPrime(int num) {
 		return false;
 	}
 
-	for (int i = 3; i < getSquareRoot(num) + 1; i += 2) {
+	for (int i = 3; i < getSquareRoot(num) + 1; i+=2) {
 		if (num % i == 0) {
 			return false;
 		}
@@ -63,7 +63,7 @@ bool isPrime(int num) {
 }
 
 bool numsAreUnique(int num) {
-	int multipleOfTen = 1000000;
+	int multipleOfTen = 1000000000;
 
 	while (num / multipleOfTen == 0) {
 		multipleOfTen /= 10;
@@ -88,7 +88,7 @@ int main() {
 	
 	std::cin >> num;
 	
-	if (num < 1 || num > 1000000) {
+	if (num < 1 || num > 1000000000) {
 		std::cout << "Incorrect input";
 		return 1;
 	}
@@ -96,11 +96,11 @@ int main() {
 	int i = 0;
 
 	while (true) {
-		if (isPrime(num - i) && numsAreUnique(num - i)) {
+		if (numsAreUnique(num - i) && isPrime(num - i)) {
 			std::cout << num - i;
 			return 0;
 		}
-		if (isPrime(num + i) && numsAreUnique(num + i)) {
+		if (numsAreUnique(num + i) && isPrime(num + i)) {
 			std::cout << num + i;
 			return 0;
 		}
@@ -108,4 +108,4 @@ int main() {
 		++i;
 	}
 }
-
+//652345
