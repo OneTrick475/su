@@ -23,9 +23,9 @@ int main() {
 		return 1;
 	}
 
-	long long multiplier = 1;
- 
 	const int DIVISOR = 10;
+
+	long long multiplier = 1;
 
 	long long int m = 0;
 
@@ -44,24 +44,18 @@ int main() {
 		n /= DIVISOR;
 	}
 
-	m += multiplier / 10;
+	multiplier /= DIVISOR;
 
-	bool printZero = false;
+	long long result = 0;
 
-	while (m / 10 != 0 || m % 10 != 0) {
-		int num = m % 10;
+	while (multiplier > 0) {
+		result += m % DIVISOR * multiplier;
+		
+		m /= DIVISOR;
 
-		if (num != 0) {
-			printZero = true;
-		}
-		else if (!printZero) {
-			m /= 10;
-			continue;
-		}
-
-		std::cout << num;
-
-		m /= 10;
+		multiplier /= DIVISOR;
 	}
+
+	std::cout << result + 1;
 
 }
