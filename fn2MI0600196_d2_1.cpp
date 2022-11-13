@@ -70,11 +70,15 @@ void add(int n, char num1[], int k, char num2[], int result[]) {
 	}
 
 	printReversedNum(result, n+1);
-
 }
 
 void subtract(int n, char num1[], int k, char num2[], int result[], bool isNegative = false) {
 	int remainder = 0;
+
+	if (n == k == 1) {
+		std::cout << num1[0] - num2[0];
+		return;
+	}
 
 	for (int i = n - 1; i >= 0; --i) {
 		result[n - i - 1] = num1[i] - '0';
@@ -146,7 +150,6 @@ void sumOrDiff(int n, char num1[], int k, char num2[], char operation) {
 		else {
 			subtract(n, num1, k, num2, result);
 		}
-		
 	}
 }
 
