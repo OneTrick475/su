@@ -224,7 +224,7 @@ void sumOrDiff(int n, char num1[], int k, char num2[], char operation) {
 	{
 		makeNegative(n, num1);
 	}
-	if (firstNegative)
+	if (secondNegative)
 	{
 		makeNegative(k, num2);
 	}
