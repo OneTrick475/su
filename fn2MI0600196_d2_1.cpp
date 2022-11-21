@@ -75,7 +75,7 @@ void add(int n, char num1[], int k, char num2[], int result[], bool isNegative =
 void subtract(int n, char num1[], int k, char num2[], int result[], bool isNegative = false) {
 	int remainder = 0;
 
-	if (n == k == 1) {
+	if (n == k && k == 1) {
 		std::cout << num1[0] - num2[0];
 		return;
 	}
@@ -112,13 +112,22 @@ void subtract(int n, char num1[], int k, char num2[], int result[], bool isNegat
 	}
 
 	printReversedNum(result, n, isNegative);
-	
+
 }
 
 void makePositive(int n, char num[]) {
 	for (int i = 0; i < n - 1; ++i) {
 		num[i] = num[i + 1];
 	}
+}
+
+void makeNegative(int n, char num[])
+{
+	for(int i = n; i > 0; --i)
+	{
+		num[i] = num[i - 1];
+	}
+	num[0] = '-';
 }
 
 void sumOrDiff(int n, char num1[], int k, char num2[], char operation) {
@@ -137,10 +146,8 @@ void sumOrDiff(int n, char num1[], int k, char num2[], char operation) {
 		secondNegative = true;
 	}
 
-	int max = n > k ? n : k;
-
 	if (operation == '+') {
-		if (n == max) {
+		if (n > k) {
 			if (firstNegative && secondNegative) {
 				add(n, num1, k, num2, result, true);
 			}
@@ -173,19 +180,53 @@ void sumOrDiff(int n, char num1[], int k, char num2[], char operation) {
 		bool isNegative = n < k;
 
 		if (n == k) {
-			for (int i = 1; i < max; i++) {
+			for (int i = 0; i < n; i++) {
 				if (num2[i] > num1[i]) {
 					isNegative = true;
+					break;
+				}
+				if(num2[i] < num1[i])
+				{
 					break;
 				}
 			}
 		}
 		if (isNegative) {
-			subtract(k, num2, n, num1, result, true);
+			if (firstNegative && secondNegative) {
+				subtract(k, num2, n, num1, result);
+			}
+			else if (firstNegative) {
+				add(k, num2, n, num1, result, true);
+			}
+			else if (secondNegative) {
+				add(k, num2, n, num1, result);
+			}
+			else {
+				subtract(k, num2, n, num1, result, true);
+			}
 		}
 		else {
-			subtract(n, num1, k, num2, result);
+			if (firstNegative && secondNegative) {
+				subtract(n, num1, k, num2, result, true);
+			}
+			else if (firstNegative) {
+				add(n, num1, k, num2, result, true);
+			}
+			else if (secondNegative) {
+				add(n, num1, k, num2, result);
+			}
+			else {
+				subtract(n, num1, k, num2, result);
+			}
 		}
+	}
+	if(firstNegative)
+	{
+		makeNegative(n, num1);
+	}
+	if (firstNegative)
+	{
+		makeNegative(k, num2);
 	}
 }
 
