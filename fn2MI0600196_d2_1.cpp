@@ -24,7 +24,7 @@ void printReversedNum(int arr[1025], int end, bool isNegative = false) {
 		}
 		--end;
 	}
-	
+
 	if (isNegative) {
 		arr[end - 1] *= -1;
 	}
@@ -34,7 +34,7 @@ void printReversedNum(int arr[1025], int end, bool isNegative = false) {
 	}
 }
 
-void add(int n, char num1[], int k, char num2[], int result[]) {
+void add(int n, char num1[], int k, char num2[], int result[], bool isNegative = false) {
 	int remainder = 0;
 
 	for (int i = n - 1; i >= 0; --i) {
@@ -69,7 +69,7 @@ void add(int n, char num1[], int k, char num2[], int result[]) {
 		result[k++] = currNum;
 	}
 
-	printReversedNum(result, n+1);
+	printReversedNum(result, n + 1, isNegative);
 }
 
 void subtract(int n, char num1[], int k, char num2[], int result[], bool isNegative = false) {
@@ -111,29 +111,65 @@ void subtract(int n, char num1[], int k, char num2[], int result[], bool isNegat
 		result[k++] = currNum;
 	}
 
-	if (isNegative) {
-		printReversedNum(result, n, true);
-	}
-	else {
-		printReversedNum(result, n);
-	}
- }
+	printReversedNum(result, n, isNegative);
+	
+}
 
+void makePositive(int n, char num[]) {
+	for (int i = 0; i < n - 1; ++i) {
+		num[i] = num[i + 1];
+	}
+}
 
 void sumOrDiff(int n, char num1[], int k, char num2[], char operation) {
 	int result[UPPER_LIMIT + 1] = {};
+
+	int firstNegative = false;
+	if (num1[0] == '-') {
+		makePositive(n, num1);
+		--n;
+		firstNegative = true;
+	}
+	int secondNegative = false;
+	if (num2[0] == '-') {
+		makePositive(k, num2);
+		--k;
+		secondNegative = true;
+	}
 
 	int max = n > k ? n : k;
 
 	if (operation == '+') {
 		if (n == max) {
-			add(n, num1, k, num2, result);
+			if (firstNegative && secondNegative) {
+				add(n, num1, k, num2, result, true);
+			}
+			else if (firstNegative) {
+				subtract(n, num1, k, num2, result, true);
+			}
+			else if (secondNegative) {
+				subtract(n, num1, k, num2, result);
+			}
+			else {
+				add(n, num1, k, num2, result);
+			}
 		}
 		else {
-			add(k, num2, n, num1, result);
+			if (firstNegative && secondNegative) {
+				add(k, num2, n, num1, result, true);
+			}
+			else if (firstNegative) {
+				subtract(k, num2, n, num1, result);
+			}
+			else if (secondNegative) {
+				subtract(k, num2, n, num1, result, true);
+			}
+			else {
+				add(k, num2, n, num1, result);
+			}
 		}
 	}
-	else if(operation == '-') {
+	else if (operation == '-') {
 		bool isNegative = n < k;
 
 		if (n == k) {
@@ -155,8 +191,8 @@ void sumOrDiff(int n, char num1[], int k, char num2[], char operation) {
 
 int main() {
 	int n = 0, k = 0;
-	char num1[UPPER_LIMIT] = {'0'};
-	char num2[UPPER_LIMIT] = {'0'};
+	char num1[UPPER_LIMIT] = { '0' };
+	char num2[UPPER_LIMIT] = { '0' };
 
 	std::cin >> n;
 
@@ -171,6 +207,6 @@ int main() {
 	}
 
 	sumOrDiff(n, num1, k, num2, '+');
-	std::cout << '\n' ;
+	std::cout << '\n';
 	sumOrDiff(n, num1, k, num2, '-');
 }
