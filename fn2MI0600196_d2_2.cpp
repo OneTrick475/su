@@ -13,14 +13,20 @@
 
 #include <iostream>
 
+bool equal(double x, double y){
+	double const diff = 0.0001;
+	return (x > y - diff && x < y + diff);
+}
+
 bool hitsBorder(double x, double y) {
-	return (x * x + y * y == 1) ||
-		(((4 - x) * (4 - x) + (4 - y) * (4 - y) == 4) || ((4 + x) * (4 + x) + (4 - y) * (4 - y) == 4)) ||
-		(x * x + y * y == 100) ||
-		((y == -4 || y == -6) && x >= -5 && x <= 5) ||
-		((x == -5 || y == 5) && y <= -4 && y >= -6) ||
-		((y == -10 || y == 10) && x >= -10 && x <= 10) ||
-		((x == -10 || y == 10) && y <= 10 && y >= -10);
+	return (equal(x * x + y * y, 1)) ||
+		equal((4 - x) * (4 - x) + (4 - y) * (4 - y), 4) || 
+		equal((4 + x) * (4 + x) + (4 - y) * (4 - y), 4) ||
+		equal(x * x + y * y, 100) ||
+		((equal(y, -4) || equal(y, -6)) && x >= -5 && x <= 5) ||
+		((equal(x, -5) || equal(y, 5)) && y <= -4 && y >= -6) ||
+		((equal(y, -10) || equal(y, 10)) && x >= -10 && x <= 10) ||
+		((equal(x, -10) || equal(y, 10)) && y <= 10 && y >= -10);
 }
 
 bool hitsNose(double x, double y) {
