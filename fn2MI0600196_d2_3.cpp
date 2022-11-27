@@ -53,6 +53,7 @@ int main() {
 	std::cin >> n;
 
 	if (n < LOWER_LIMIT || n > UPPER_LIMIT) {
+		std::cout << -1;
 		return -1;
 	}
 	

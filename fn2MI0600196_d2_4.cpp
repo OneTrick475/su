@@ -45,6 +45,7 @@ int main() {
 	std::cin >> size;
 	
 	if (size < SIZE_LOWER || size > SIZE_UPPER) {
+		std::cout << -1;
 		return -1;
 	}
 
