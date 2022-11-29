@@ -32,6 +32,10 @@ bool isPrime(int num) {
 }
 
 int concat(int numArr[],int start,int end) {
+	if(numArr[end] == 0){
+		return 0;
+	}
+
 	int num = 0;
 	int multiplier = 1;
 
