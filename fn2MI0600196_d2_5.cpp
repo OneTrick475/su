@@ -52,7 +52,7 @@ int numOfOperationsToPrime(int num) {
 	const int UPPER_LIMIT = 1000000000;
 
 	if (num < LOWER_LIMIT || num > UPPER_LIMIT) {
-		return -1;
+		return -2;
 	}
 
 	int numArr[10] = {};
