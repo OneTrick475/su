@@ -63,15 +63,18 @@ int numOfOperationsToPrime(int num) {
 		num /= 10;
 	}
 
+	int min = -1;
+
 	for (int i = size - 1; i >= 0; --i) {
 		for (int j = 0; j <= i; j += 2) {
 			int currNum = concat(numArr, j, i);
 			if (isPrime(currNum)) {
-				return (size - 1 - i) + (j / 2);
+				int currMin = (size - 1 - i) + (j / 2);
+				min = (currMin < min || min == -1) ? currMin : min;
 			}
 		}
 	}
-	return -1;
+	return min;
 }
 
 int main() {
