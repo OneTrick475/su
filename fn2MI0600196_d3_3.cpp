@@ -25,11 +25,11 @@ int getPlanesForPeriod(int startHour, int startMin, int endHour, int endMin, cha
 	int count = 0;
 
 	for(int i = 0; i < size; ++i) {
-		int arrHour = getHour((arrivals + i * 4));
-		int arrMin = getMinute((arrivals + i * 4));
+		int arrHour = getHour(&arrivals[i*4]);
+		int arrMin = getMinute(&arrivals[i * 4]);
 
-		int depHour = getHour((departures + i * 4));
-		int depMin = getMinute((departures + i * 4));
+		int depHour = getHour(&departures[i * 4]);
+		int depMin = getMinute(&departures[i * 4]);
 
 		if(startHour > endHour || (startHour == endHour && startMin > endMin)) {
 			return 0;
@@ -88,7 +88,7 @@ bool isAdded(int startHour, int startMinute, int endHour, int endMinute, int* pe
 void printBusyPeriods(char* arrivals,char* departures, int size) {
 	int max = 0;
 
-	int* busyPeriods = new int[size * 4];
+	int* busyPeriods = new int[size * size * 4];
 
 	int numOfBusyPeriods = 0;
 
@@ -118,9 +118,6 @@ void printBusyPeriods(char* arrivals,char* departures, int size) {
 				++numOfBusyPeriods;
 			}
 			else if(planes > max) {
-				delete[] busyPeriods;
-				busyPeriods = new int[size * 4];
-
 				busyPeriods[0] = startHour;
 				busyPeriods[1] = startMin;
 				busyPeriods[2] = endHour;
