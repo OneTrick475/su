@@ -21,17 +21,22 @@ bool isBigger(char first[], char second[]) {
 	int firstIndex = MAX_DIGITS - 1;
 	int secondIndex = MAX_DIGITS - 1;
 
+	int firstLen = 4;
+	int secondLen = 4;
+
 	while (first[firstIndex] == '\0') {
 		--firstIndex;
+		--firstLen;
 	}
 	while (second[secondIndex] == '\0') {
 		--secondIndex;
+		--secondLen;
 	}
 
 	while(firstIndex >= 0 && secondIndex >= 0) {
 		if(first[firstIndex] == second[secondIndex]) {
 			if(firstIndex == secondIndex && firstIndex == 0) {
-				return false;
+				return firstLen > secondLen;
 			}
 			firstIndex = firstIndex > 0 ? firstIndex - 1 : firstIndex;
 			secondIndex = secondIndex > 0 ? secondIndex - 1 : secondIndex;
@@ -43,7 +48,7 @@ bool isBigger(char first[], char second[]) {
 			return false;
 		}
 	}
-	return false;
+	return firstLen > secondLen;
 }
 
 int getIndexOfBiggestByLeftDigit(int nums[], int size, int start) {
