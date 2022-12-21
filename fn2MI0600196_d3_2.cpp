@@ -17,63 +17,40 @@ const int MAX_ARR_SIZE = 15;
 const int MAX_NUM = 9999;
 const int MAX_DIGITS = 4;
 
-bool isBigger(char first[], char second[]) {
-	int firstIndex = MAX_DIGITS - 1;
-	int secondIndex = MAX_DIGITS - 1;
+int power(int num, int power) {
+	int result = 1;
+	for(int i = 0; i < power; ++i) {
+		result *= num;
+	}
+	return result;
+}
 
-	int firstLen = 4;
-	int secondLen = 4;
+bool isBigger(int first, int second) {
+	int firstLen = MAX_DIGITS;
+	int secondLen = MAX_DIGITS;
 
-	while (first[firstIndex] == '\0') {
-		--firstIndex;
+	while (first / power(10, firstLen - 1) == 0) {
 		--firstLen;
 	}
-	while (second[secondIndex] == '\0') {
-		--secondIndex;
+	while (second / power(10, secondLen - 1) == 0) {
 		--secondLen;
 	}
 
-	while(firstIndex >= 0 && secondIndex >= 0) {
-		if(first[firstIndex] == second[secondIndex]) {
-			if(firstIndex == secondIndex && firstIndex == 0) {
-				return firstLen > secondLen;
-			}
-			firstIndex = firstIndex > 0 ? firstIndex - 1 : firstIndex;
-			secondIndex = secondIndex > 0 ? secondIndex - 1 : secondIndex;
-		}
-		else if(first[firstIndex] > second[secondIndex]) {
-			return true;
-		}
-		else {
-			return false;
-		}
+	int firstNSecond = first * power(10, secondLen) + second;
+	int secondNFirst = second * power(10, firstLen) + first;
+
+	if(firstNSecond == secondNFirst) {
+		return firstLen > secondLen;
 	}
-	return firstLen > secondLen;
+
+	return firstNSecond > secondNFirst;
 }
 
 int getIndexOfBiggestByLeftDigit(int nums[], int size, int start) {
-	char tempNums[MAX_ARR_SIZE][MAX_DIGITS] = { };
-
-	for (int i = 0; i < size; ++i) {
-		int curNum = nums[i];
-
-		int j = 0;
-
-		if(curNum == 0) {
-			tempNums[i][j] = '0';
-			continue;
-		}
-
-		while (curNum / 10 != 0 || curNum % 10 != 0) {
-			tempNums[i][j++] = curNum % 10 + '0';
-			curNum /= 10;
-		}
-	}
-
 	int max = start;
 
 	for(int i = start + 1;i < size; ++i) {
-		if (isBigger(tempNums[i], tempNums[max])) {
+		if (isBigger(nums[i], nums[max])) {
 			max = i;
 		}
 	}
@@ -110,7 +87,7 @@ int main() {
 
 	for(int i=0; i<size;++i) {
 		std::cin >> nums[i];
-		if (nums[i] < 0 || nums[i] > MAX_NUM) {
+		if (nums[i] < 1 || nums[i] > MAX_NUM) {
 			std::cout << "-1";
 			return 0;
 		}
