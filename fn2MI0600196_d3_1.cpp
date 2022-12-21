@@ -17,7 +17,11 @@ void cypher(char key, char str[]){
 	int i = 0;
 
 	while(str[i] != 0) {
-		std::cout << char(str[i++] ^ key);
+		char character = char(str[i++] ^ key);
+
+		if (character) {
+			std::cout << character;
+		}
 	}
 }
 
