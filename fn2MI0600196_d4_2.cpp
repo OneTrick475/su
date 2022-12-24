@@ -12,8 +12,8 @@ int getLen(char str[]){
 }
 
 bool isAnagram(char firstStr[], char secondStr[], int start, int end){
-    int firstCounts[256] = {0};
-    int secondCounts[256] = {0};
+    int firstCounts[MAX_LEN] = {0};
+    int secondCounts[MAX_LEN] = {0};
 
     for(int i = 0; i <= end - start; ++i){
         secondCounts[secondStr[i]]++;
